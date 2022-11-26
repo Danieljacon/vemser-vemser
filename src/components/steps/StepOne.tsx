@@ -6,30 +6,50 @@ import {
   Divider,
   Stack,
   Button,
+  Select,
+  MenuItem,
 } from "@mui/material";
 import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { useCandidates } from "../../context/CandidatesContext";
+import { ICandidateForm, IStepOneProps } from "../../utils/interfaces";
+import { states } from "../../utils/states";
 import React from "react";
-
-interface ICandidateForm {
-  nome: string;
-  email: string;
-  telefone: string;
-  rg: string;
-  estado: string;
-  cidade: string;
-}
-
-interface IStepOneProps {
-  nextFormStep?: () => void;
-  formStep?: number;
-}
+import * as yup from "yup";
+import InputMask from "react-input-mask";
 
 export const StepOne: React.FC<IStepOneProps> = ({
   nextFormStep,
   formStep,
 }) => {
   const { setFormValues } = useCandidates();
+  const schema = yup.object().shape({
+    nome: yup
+      .string()
+      .required("O campo de nome é obrigatório")
+      .min(3, "É necessário no mínimo 3 letras")
+      .matches(/^[a-zA-Z ]*$/, "Nome inválido"),
+    email: yup.string().email("Email inválido").required("Email obrigatório"),
+    telefone: yup
+      .string()
+      .required("Telefone obrigatório")
+      .matches(
+        /^\([1-9]{2}\)(?:[2-8]|9[1-9])[0-9]{3}\-[0-9]{4}$/,
+        "O telefone precisa ser válido."
+      ),
+    rg: yup
+      .string()
+      .required("RG obrigatório")
+      .matches(
+        /^[0-9]{2}\.[0-9]{3}\.[0-9]{3}\-[0-9]{1}$/,
+        "O RG precisa ser válido."
+      ),
+    estado: yup.string().required("Estado obrigatório"),
+    cidade: yup
+      .string()
+      .min(3, "É necessário no mínimo 3 letras")
+      .required("Cidade obrigatório"),
+  });
 
   const {
     register,
@@ -37,6 +57,7 @@ export const StepOne: React.FC<IStepOneProps> = ({
     formState: { errors },
   } = useForm<ICandidateForm>({
     mode: "all",
+    resolver: yupResolver(schema),
   });
 
   const handleFormSubmit = (data: ICandidateForm) => {
@@ -73,8 +94,12 @@ export const StepOne: React.FC<IStepOneProps> = ({
               width: "100%",
             }}
             id="candidato-nome"
+            error={!!errors.nome}
             {...register("nome")}
           />
+          <Typography variant="caption" color="error">
+            {errors.nome?.message}
+          </Typography>
         </Grid>
         <Grid item xs={12}>
           <TextField
@@ -84,35 +109,72 @@ export const StepOne: React.FC<IStepOneProps> = ({
               width: "100%",
             }}
             id="candidato-email"
+            error={!!errors.email}
             {...register("email")}
           />
+          <Typography variant="caption" color="error">
+            {errors.email?.message}
+          </Typography>
         </Grid>
-        <Grid item xs={6}>
-          <TextField
-            label="Telefone"
-            variant="outlined"
-            sx={{ width: "100%" }}
-            id="candidato-telefone"
+        <Grid item xs={6} display="flex" flexDirection="column">
+          <InputMask
+            mask="(99)99999-9999"
+            maskChar=" "
             {...register("telefone")}
-          />
+          >
+            {
+              // @ts-ignore
+              (inputProps) => (
+                <TextField
+                  {...inputProps}
+                  label="Telefone"
+                  variant="outlined"
+                  error={!!errors.telefone}
+                />
+              )
+            }
+          </InputMask>
+          <Typography variant="caption" color="error">
+            {errors.telefone?.message}
+          </Typography>
+        </Grid>
+        <Grid item xs={6} display="flex" flexDirection="column">
+          <InputMask mask="99.999.999-9" maskChar=" " {...register("rg")}>
+            {
+              // @ts-ignore
+              (inputProps) => (
+                <TextField
+                  {...inputProps}
+                  label="RG"
+                  variant="outlined"
+                  error={!!errors.rg}
+                />
+              )
+            }
+          </InputMask>
+          <Typography variant="caption" color="error">
+            {errors.rg?.message}
+          </Typography>
         </Grid>
         <Grid item xs={6}>
-          <TextField
-            label="RG"
-            variant="outlined"
-            sx={{ width: "100%" }}
-            id="candidato-rg"
-            {...register("rg")}
-          />
-        </Grid>
-        <Grid item xs={6}>
-          <TextField
+          <Select
+            native
             label="Estado"
             variant="outlined"
             sx={{ width: "100%" }}
             id="candidato-estado"
+            error={!!errors.estado}
             {...register("estado")}
-          />
+          >
+            {states.map((state) => (
+              <option key={state.name} value={state.name}>
+                {state.value}
+              </option>
+            ))}
+          </Select>
+          <Typography variant="caption" color="error">
+            {errors.estado?.message}
+          </Typography>
         </Grid>
         <Grid item xs={6}>
           <TextField
@@ -120,8 +182,12 @@ export const StepOne: React.FC<IStepOneProps> = ({
             variant="outlined"
             sx={{ width: "100%" }}
             id="candidato-cidade"
+            error={!!errors.cidade}
             {...register("cidade")}
           />
+          <Typography variant="caption" color="error">
+            {errors.cidade?.message}
+          </Typography>
         </Grid>
 
         <Grid item xs={12}>

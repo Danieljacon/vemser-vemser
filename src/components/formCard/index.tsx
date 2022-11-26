@@ -8,12 +8,7 @@ import {
   StepLabel,
 } from "@mui/material";
 import { useCandidates } from "../../context/CandidatesContext";
-
-interface IFormCardProps {
-  children?: React.ReactNode;
-  currentStep: number;
-  prevFormStep: () => void;
-}
+import { IFormCardProps } from "../../utils/interfaces";
 
 const steps: string[] = [
   "Informações Cadastrais",
@@ -38,7 +33,16 @@ export const FormCard = ({
           <Stepper activeStep={currentStep} sx={{ my: 2 }}>
             {steps.map((label) => (
               <Step key={label}>
-                <StepLabel>{label}</StepLabel>
+                <StepLabel sx={{
+                  flexDirection: {
+                    xs: "column",
+                    sm: "row",
+                  },
+                  gap: {
+                    xs: 1,
+                    sm: 0,
+                  }
+                }}>{label}</StepLabel>
               </Step>
             ))}
           </Stepper>

@@ -1,13 +1,5 @@
 import { useState, createContext, useContext } from "react";
-
-interface ICandidateContext {
-  setFormValues: (values: object) => void;
-  data: object;
-}
-
-interface IChildren {
-  children: React.ReactNode;
-}
+import { ICandidateContext, IChildren } from "../utils/interfaces";
 
 export const CandidatesContext = createContext({} as ICandidateContext);
 

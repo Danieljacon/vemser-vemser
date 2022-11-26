@@ -10,7 +10,7 @@ import {
 import { Link } from "react-router-dom";
 import logoDbc from "../../assets/logo-white.svg";
 
-export const Home = () => {
+export const Home: React.FC = () => {
   return (
     <Container
       maxWidth="lg"

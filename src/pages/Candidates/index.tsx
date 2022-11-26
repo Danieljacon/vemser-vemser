@@ -2,19 +2,11 @@ import { Box, Container } from "@mui/material";
 import { useState } from "react";
 import { FormCard, FormCompleted } from "../../components/formCard";
 import { StepOne } from "../../components/steps";
-
-// const steps: string[] = [
-//   "Informações Cadastrais",
-//   "Formulário de Inscrição",
-//   "Avaliação do Candidato",
-// ];
-
-export const Candidates = () => {
+export const Candidates: React.FC = () => {
   const [formStep, setFormStep] = useState<number>(0);
-
   const nextFormStep = () => setFormStep((currentStep) => currentStep + 1);
-
   const prevFormStep = () => setFormStep((currentStep) => currentStep - 1);
+
   return (
     <Container
       maxWidth="lg"
