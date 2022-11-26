@@ -112,11 +112,11 @@ export const Home = () => {
               >
                 <img src={logoDbc} alt="Logo DBC" width="125" />
                 <Typography variant="h6" component="p" color="white">
-                  Ainda não se inscrveu no VemSer?
+                  Ainda não se inscreveu no VemSer?
                 </Typography>
                 <Button
                   component={Link}
-                  to="/"
+                  to="/register"
                   variant="contained"
                   id="register"
                 >
