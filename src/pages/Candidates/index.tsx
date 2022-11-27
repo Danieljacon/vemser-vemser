@@ -3,6 +3,7 @@ import { useState } from "react";
 import { FormCard, FormCompleted } from "../../components/formCard";
 import { StepOne } from "../../components/steps";
 import { StepTwo } from "../../components/steps/StepTwo";
+
 export const Candidates: React.FC = () => {
   const [formStep, setFormStep] = useState<number>(0);
   const nextFormStep = () => setFormStep((currentStep) => currentStep + 1);

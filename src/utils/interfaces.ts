@@ -52,3 +52,9 @@ export interface ICandidateContext {
 export interface IChildren {
   children: React.ReactNode;
 }
+
+export interface ISearchColaborators {
+  nome: string;
+  email: string;
+  cargo: string;
+}
