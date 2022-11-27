@@ -8,9 +8,26 @@ import {
   Typography,
 } from "@mui/material";
 import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { ILogin } from "../../utils/interfaces";
+import { loginSchema } from "../../utils/schemas";
 import logoDbc from "../../assets/logo-white.svg";
 
 export const Home: React.FC = () => {
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ILogin>({
+    resolver: yupResolver(loginSchema),
+  });
+
+  const handleLogin = (data: ILogin) => {
+    console.log(data);
+  };
+
   return (
     <Container
       maxWidth="lg"
@@ -62,26 +79,35 @@ export const Home: React.FC = () => {
               flexDirection="column"
               justifyContent="center"
             >
-              <Stack spacing={2} component="form" id="login">
+              <Stack
+                spacing={2}
+                component="form"
+                id="login"
+                onSubmit={handleSubmit(handleLogin)}
+              >
                 <TextField
                   type="email"
-                  id="email"
+                  id="home-email"
+                  error={!!errors.email}
                   label="Email"
                   variant="filled"
                   helperText="Digite seu email"
+                  {...register("email")}
                 />
                 <TextField
                   label="Senha"
                   type="password"
-                  id="password"
+                  id="home-senha"
+                  error={!!errors.password}
                   variant="filled"
                   helperText="Digite sua senha"
+                  {...register("password")}
                 />
                 <Button
                   type="submit"
                   variant="contained"
                   color="primary"
-                  id="btn-login"
+                  id="home-entrar"
                 >
                   Entrar
                 </Button>

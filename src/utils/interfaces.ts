@@ -1,3 +1,8 @@
+export interface ILogin {
+  email: string;
+  password: string;
+}
+
 export interface ICandidateForm {
   nome: string;
   email: string;
