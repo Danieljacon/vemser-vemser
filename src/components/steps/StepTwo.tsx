@@ -319,6 +319,7 @@ export const StepTwo: React.FC<IStepProps> = ({
               accept="application/pdf,application/vnd.ms-excel"
               multiple
               type="file"
+              id="candidato-curriculo"
               {...register("curriculo")}
             />
           </Button>

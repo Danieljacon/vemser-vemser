@@ -18,12 +18,8 @@ import React from "react";
 import InputMask from "react-input-mask";
 import { stepOneSchema } from "../../utils/schemas";
 
-export const StepOne: React.FC<IStepProps> = ({
-  nextFormStep,
-  formStep,
-}) => {
+export const StepOne: React.FC<IStepProps> = ({ nextFormStep, formStep }) => {
   const { setFormValues } = useCandidates();
-
 
   const {
     register,
@@ -75,7 +71,7 @@ export const StepOne: React.FC<IStepProps> = ({
             {errors.nome?.message}
           </Typography>
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={6}>
           <TextField
             label="Email"
             variant="outlined"
@@ -88,6 +84,29 @@ export const StepOne: React.FC<IStepProps> = ({
           />
           <Typography variant="caption" color="error">
             {errors.email?.message}
+          </Typography>
+        </Grid>
+        <Grid item xs={6}>
+          <InputMask mask="999.999.999-99" maskChar=" " {...register("cpf")}>
+            {
+              // @ts-ignore
+              (inputProps) => (
+                <TextField
+                  {...inputProps}
+                  label="CPF"
+                  variant="outlined"
+                  error={!!errors.cpf}
+                  id="candidato-cpf"
+                  sx={{
+                    width: "100%",
+                  }}
+                />
+              )
+            }
+          </InputMask>
+
+          <Typography variant="caption" color="error">
+            {errors.cpf?.message}
           </Typography>
         </Grid>
         <Grid item xs={6} display="flex" flexDirection="column">
@@ -104,6 +123,7 @@ export const StepOne: React.FC<IStepProps> = ({
                   label="Telefone"
                   variant="outlined"
                   error={!!errors.telefone}
+                  id="candidato-telefone"
                 />
               )
             }
@@ -113,19 +133,13 @@ export const StepOne: React.FC<IStepProps> = ({
           </Typography>
         </Grid>
         <Grid item xs={6} display="flex" flexDirection="column">
-          <InputMask mask="99.999.999-9" maskChar=" " {...register("rg")}>
-            {
-              // @ts-ignore
-              (inputProps) => (
-                <TextField
-                  {...inputProps}
-                  label="RG"
-                  variant="outlined"
-                  error={!!errors.rg}
-                />
-              )
-            }
-          </InputMask>
+          <TextField
+            label="RG"
+            variant="outlined"
+            {...register("rg")}
+            error={!!errors.rg}
+            id="candidato-rg"
+          />
           <Typography variant="caption" color="error">
             {errors.rg?.message}
           </Typography>
@@ -165,7 +179,7 @@ export const StepOne: React.FC<IStepProps> = ({
         </Grid>
 
         <Grid item xs={12}>
-          <Button type="submit" variant="contained">
+          <Button type="submit" variant="contained" id="button-candidato">
             Próximo
           </Button>
         </Grid>

@@ -5,6 +5,7 @@ export interface ICandidateForm {
   rg: string;
   estado: string;
   cidade: string;
+  cpf: string;
 }
 
 export interface IInscriptionForm {

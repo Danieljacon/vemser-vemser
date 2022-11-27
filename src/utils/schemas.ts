@@ -7,6 +7,10 @@ export const stepOneSchema = yup.object().shape({
     .min(3, "É necessário no mínimo 3 letras")
     .matches(/^[a-zA-Z ]*$/, "Nome inválido"),
   email: yup.string().email("Email inválido").required("Email obrigatório"),
+  cpf: yup.string().required("CPF obrigatório").matches(
+    /^(\d{3}\.?\d{3}\.?\d{3}\-?\d{2})$/,
+    "CPF inválido"
+  ),
   telefone: yup
     .string()
     .required("Telefone obrigatório")
@@ -17,10 +21,7 @@ export const stepOneSchema = yup.object().shape({
   rg: yup
     .string()
     .required("RG obrigatório")
-    .matches(
-      /^[0-9]{2}\.[0-9]{3}\.[0-9]{3}\-[0-9]{1}$/,
-      "O RG precisa ser válido."
-    ),
+    .min(8, "O RG precisa ter no mínimo 8 caracteres"),
   estado: yup.string().required("Estado obrigatório"),
   cidade: yup
     .string()
@@ -45,7 +46,11 @@ export const stepTwoSchema = yup.object().shape({
           problemas === false
         );
       },
-      then: yup.string().required("Preencha o campo 'Outro motivo' ou selecione uma das opções acima"),
+      then: yup
+        .string()
+        .required(
+          "Preencha o campo 'Outro motivo' ou selecione uma das opções acima"
+        ),
       otherwise: yup.string(),
     }),
   instituicao: yup.string().when("matriculado", {
