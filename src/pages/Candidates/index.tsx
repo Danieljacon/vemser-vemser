@@ -27,8 +27,8 @@ export const Candidates: React.FC = () => {
             sm: 3,
             md: 4,
           },
-          margin: {
-            xs: 1,
+          my: {
+            xs: 2,
             sm: 3,
             md: 4,
           },

@@ -5,36 +5,20 @@ import {
   Stack,
   Button,
   FormLabel,
-  Input,
-  RadioGroup,
   FormControlLabel,
-  FormControl,
   Checkbox,
 } from "@mui/material";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useCandidates } from "../../context/CandidatesContext";
-import { ICandidateForm, IStepOneProps } from "../../utils/interfaces";
+import { IInscriptionForm, IStepProps } from "../../utils/interfaces";
 import { Radio } from "../../utils/theme";
 import { useState } from "react";
 import { GithubLogo } from "phosphor-react";
+import { Box } from "@mui/system";
+import { stepTwoSchema } from "../../utils/schemas";
 
-interface IInscriptionForm {
-  matriculado: string;
-  curso: string;
-  instituicao: string;
-  turno: string;
-  github: string;
-  desafios: string;
-  problemas: string;
-  reconhecimento: string;
-  altruismo: string;
-  motivo: string;
-  curriculo: string;
-  // lgpd: boolean,
-}
-
-export const StepTwo: React.FC<IStepOneProps> = ({
+export const StepTwo: React.FC<IStepProps> = ({
   nextFormStep,
   formStep,
 }) => {
@@ -53,14 +37,12 @@ export const StepTwo: React.FC<IStepOneProps> = ({
       matriculado: "sim",
       turno: "0",
     },
-    //   resolver: yupResolver(schema),
+    resolver: yupResolver(stepTwoSchema),
   });
 
   const matriculado = watch("matriculado");
-  matriculado === "nao" && setValue("instituicao", "Nenhuma");
-  matriculado === "sim" && setValue("instituicao", "");
-  matriculado === "nao" && setValue("curso", "Nenhum");
-  matriculado === "sim" && setValue("curso", "");
+  matriculado === "nao" && setValue("instituicao", " ");
+  matriculado === "nao" && setValue("curso", " ");
   matriculado === "nao" && setValue("turno", "0");
 
   const handleFormSubmit = (data: IInscriptionForm) => {
@@ -268,6 +250,9 @@ export const StepTwo: React.FC<IStepOneProps> = ({
               }
               label="Outro motivo"
             />
+            <Typography variant="caption" color="error" sx={{ mb: 1 }}>
+              {errors.motivo?.message}
+            </Typography>
             {anotherReason && (
               <TextField
                 label="Por qual motivo você se interessou pela área de tecnologia?"
@@ -284,7 +269,7 @@ export const StepTwo: React.FC<IStepOneProps> = ({
           </Stack>
         </Grid>
 
-        <Grid item xs={6}>
+        <Grid item xs={12} md={6}>
           <TextField
             label="Qual o link do seu repositorio no GitHub?"
             variant="outlined"
@@ -294,12 +279,9 @@ export const StepTwo: React.FC<IStepOneProps> = ({
             id="candidato-github"
             InputProps={{
               startAdornment: (
-                <>
+                <Box display="flex" alignItems="center" mr={1}>
                   <GithubLogo size={20} color="#1f64ff" weight="fill" />
-                  <Typography variant="body1" sx={{ ml: 1 }}>
-                    https://
-                  </Typography>
-                </>
+                </Box>
               ),
             }}
             error={!!errors.github}
@@ -310,8 +292,24 @@ export const StepTwo: React.FC<IStepOneProps> = ({
           </Typography>
         </Grid>
 
-        <Grid item xs={6} sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-          <Typography variant="body1" >
+        <Grid
+          item
+          xs={12}
+          md={6}
+          sx={{
+            display: "flex",
+            flexDirection: {
+              xs: "column",
+              md: "row",
+            },
+            alignItems: {
+              xs: "flex-start",
+              md: "center",
+            },
+            gap: 1,
+          }}
+        >
+          <Typography variant="body1">
             Deseja adicionar um currículo?
           </Typography>
           <Button variant="outlined" component="label">

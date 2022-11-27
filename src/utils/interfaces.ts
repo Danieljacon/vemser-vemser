@@ -7,7 +7,22 @@ export interface ICandidateForm {
   cidade: string;
 }
 
-export interface IStepOneProps {
+export interface IInscriptionForm {
+  matriculado: string;
+  curso: string;
+  instituicao: string;
+  turno: string;
+  github: string;
+  desafios: boolean;
+  problemas: boolean;
+  reconhecimento: boolean;
+  altruismo: boolean;
+  motivo: string;
+  curriculo: string;
+  // lgpd: boolean,
+}
+
+export interface IStepProps {
   nextFormStep?: () => void;
   formStep?: number;
 }

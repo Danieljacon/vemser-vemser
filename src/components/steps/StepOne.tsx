@@ -11,14 +11,14 @@ import {
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useCandidates } from "../../context/CandidatesContext";
-import { ICandidateForm, IStepOneProps } from "../../utils/interfaces";
+import { ICandidateForm, IStepProps } from "../../utils/interfaces";
 import { states } from "../../utils/states";
 import React from "react";
 
 import InputMask from "react-input-mask";
 import { stepOneSchema } from "../../utils/schemas";
 
-export const StepOne: React.FC<IStepOneProps> = ({
+export const StepOne: React.FC<IStepProps> = ({
   nextFormStep,
   formStep,
 }) => {
