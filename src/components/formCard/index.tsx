@@ -6,6 +6,8 @@ import {
   Stepper,
   Step,
   StepLabel,
+  Alert,
+  AlertTitle,
 } from "@mui/material";
 import { useCandidates } from "../../context/CandidatesContext";
 import { IFormCardProps } from "../../utils/interfaces";
@@ -14,7 +16,7 @@ import { textAlign } from "@mui/system";
 const steps: string[] = [
   "Informações Cadastrais",
   "Formulário de Inscrição",
-  "Avaliação do Candidato",
+  "Finalização",
 ];
 
 export const FormCard = ({
@@ -34,23 +36,27 @@ export const FormCard = ({
           <Stepper activeStep={currentStep} sx={{ my: 2 }}>
             {steps.map((label) => (
               <Step key={label}>
-                <StepLabel sx={{
-                  flexDirection: {
-                    xs: "column",
-                    sm: "row",
-                  },
-                  gap: {
-                    xs: 1,
-                    sm: 0,
-                  },
-                  textAlign: "center"
-                }}>{label}</StepLabel>
+                <StepLabel
+                  sx={{
+                    flexDirection: {
+                      xs: "column",
+                      sm: "row",
+                    },
+                    gap: {
+                      xs: 1,
+                      sm: 0,
+                    },
+                    textAlign: "center",
+                  }}
+                >
+                  {label}
+                </StepLabel>
               </Step>
             ))}
           </Stepper>
 
-          {currentStep > 0 && (
-            <Button onClick={prevFormStep} variant="outlined" sx={{mb: 2}}>
+          {currentStep > 0 && currentStep < 2 && (
+            <Button onClick={prevFormStep} variant="outlined" sx={{ mb: 2 }}>
               Voltar
             </Button>
           )}
@@ -63,10 +69,19 @@ export const FormCard = ({
 
 export const FormCompleted = () => {
   const { data } = useCandidates();
-  console.log(data)
+  console.log(data);
   return (
-    <div>
-      <Typography>Você completou a inscrição! Aguarde o resultado.</Typography>
-    </div>
+    <Alert
+      severity="success"
+      sx={{
+        mt: 2,
+        borderRadius: 4,
+      }}
+    >
+      <AlertTitle>
+        Você completou a sua inscrição no <strong>VemSer DBC</strong>!
+      </AlertTitle>
+      Em breve você receberá um e-mail com o resultado do seu processo seletivo.
+    </Alert>
   );
 };
