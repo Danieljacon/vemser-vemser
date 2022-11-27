@@ -2,6 +2,7 @@ import { Box, Container } from "@mui/material";
 import { useState } from "react";
 import { FormCard, FormCompleted } from "../../components/formCard";
 import { StepOne } from "../../components/steps";
+import { StepTwo } from "../../components/steps/StepTwo";
 export const Candidates: React.FC = () => {
   const [formStep, setFormStep] = useState<number>(0);
   const nextFormStep = () => setFormStep((currentStep) => currentStep + 1);
@@ -32,8 +33,7 @@ export const Candidates: React.FC = () => {
             md: 4,
           },
           borderRadius: {
-            xs: 0,
-            sm: 3,
+            xs: 3,
           },
         }}
       >
@@ -46,10 +46,10 @@ export const Candidates: React.FC = () => {
                 )}
 
                 {formStep >= 1 && (
-                  <StepOne formStep={formStep} nextFormStep={nextFormStep} />
+                  <StepTwo formStep={formStep} nextFormStep={nextFormStep} />
                 )}
 
-                {formStep > 2 && <FormCompleted />}
+                {formStep > 1 && <FormCompleted />}
               </FormCard>
             </Box>
           </Box>

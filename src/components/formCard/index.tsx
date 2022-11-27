@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import { useCandidates } from "../../context/CandidatesContext";
 import { IFormCardProps } from "../../utils/interfaces";
+import { textAlign } from "@mui/system";
 
 const steps: string[] = [
   "Informações Cadastrais",
@@ -41,14 +42,15 @@ export const FormCard = ({
                   gap: {
                     xs: 1,
                     sm: 0,
-                  }
+                  },
+                  textAlign: "center"
                 }}>{label}</StepLabel>
               </Step>
             ))}
           </Stepper>
 
           {currentStep > 0 && (
-            <Button onClick={prevFormStep} variant="outlined">
+            <Button onClick={prevFormStep} variant="outlined" sx={{mb: 2}}>
               Voltar
             </Button>
           )}
@@ -61,6 +63,7 @@ export const FormCard = ({
 
 export const FormCompleted = () => {
   const { data } = useCandidates();
+  console.log(data)
   return (
     <div>
       <Typography>Você completou a inscrição! Aguarde o resultado.</Typography>
