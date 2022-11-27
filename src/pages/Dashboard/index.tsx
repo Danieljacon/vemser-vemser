@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Button,
@@ -7,11 +7,15 @@ import {
   Select,
   TextField,
   Typography,
+  Stack,
+  Pagination
 } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { dashboardSearchSchema } from "../../utils/schemas";
 import { ISearchColaborators } from "../../utils/interfaces";
+import { DataGrid } from "@mui/x-data-grid";
+import { rows } from "../../utils/fakeApi";
 
 export const Dashboard: React.FC = () => {
   const {
@@ -26,8 +30,23 @@ export const Dashboard: React.FC = () => {
     console.log(data);
   };
 
+  const columns = [
+    { field: "nome", headerName: "Nome", width: 200 },
+    { field: "email", headerName: "Email", minWidth: 220, flex: 1 },
+    { field: "cargo", headerName: "Cargo", width: 120 },
+  ];
+
   return (
-    <Box component="main" maxWidth="lg" m="0 auto">
+    <Stack
+      direction={{
+        xs: "column",
+        lg: "row",
+      }}
+      spacing={3}
+      component="main"
+      maxWidth="lg"
+      m="0 auto"
+    >
       <Paper
         elevation={2}
         sx={{
@@ -43,7 +62,7 @@ export const Dashboard: React.FC = () => {
           Buscar
         </Typography>
         <Grid container spacing={2}>
-          <Grid item xs={12} md={5}>
+          <Grid item xs={12}>
             <TextField
               label="Nome"
               variant="outlined"
@@ -58,7 +77,7 @@ export const Dashboard: React.FC = () => {
               {errors.nome?.message}
             </Typography>
           </Grid>
-          <Grid item xs={12} md={5}>
+          <Grid item xs={12}>
             <TextField
               label="Email"
               variant="outlined"
@@ -73,7 +92,7 @@ export const Dashboard: React.FC = () => {
               {errors.email?.message}
             </Typography>
           </Grid>
-          <Grid item xs={12} md={2}>
+          <Grid item xs={12}>
             <Select
               native
               variant="outlined"
@@ -101,6 +120,21 @@ export const Dashboard: React.FC = () => {
           Buscar
         </Button>
       </Paper>
-    </Box>
+
+      <Box sx={{ height: "470px", width: "100%", display: "flex", flexDirection: "column" }}>
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          pageSize={10}
+          hideFooterPagination
+
+        />
+        <Pagination count={10} color="primary" size="small"
+        sx={{
+          mt: "-40px",
+          mx: "auto"
+        }} />
+      </Box>
+    </Stack>
   );
 };
