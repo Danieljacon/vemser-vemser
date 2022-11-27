@@ -7,14 +7,21 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ILogin } from "../../utils/interfaces";
 import { loginSchema } from "../../utils/schemas";
+import { useEffect } from "react";
 import logoDbc from "../../assets/logo-white.svg";
 
 export const Home: React.FC = () => {
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    token && navigate("/dashboard");
+  }, []);
+  const navigate = useNavigate();
 
   const {
     register,
@@ -108,6 +115,11 @@ export const Home: React.FC = () => {
                   variant="contained"
                   color="primary"
                   id="home-entrar"
+                  onClick={() => {
+                    // add to localStorage a token = asd
+                    localStorage.setItem("token", "asd");
+                    navigate("/dashboard");
+                  }}
                 >
                   Entrar
                 </Button>

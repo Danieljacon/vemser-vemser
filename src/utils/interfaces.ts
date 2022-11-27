@@ -28,6 +28,11 @@ export interface IInscriptionForm {
   lgpd: boolean,
 }
 
+export interface IDrawerContainerProps {
+  children: React.ReactNode;
+  window?: () => Window;
+}
+
 export interface IStepProps {
   nextFormStep?: () => void;
   formStep?: number;
