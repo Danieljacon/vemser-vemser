@@ -18,10 +18,7 @@ import { GithubLogo } from "phosphor-react";
 import { Box } from "@mui/system";
 import { stepTwoSchema } from "../../utils/schemas";
 
-export const StepTwo: React.FC<IStepProps> = ({
-  nextFormStep,
-  formStep,
-}) => {
+export const StepTwo: React.FC<IStepProps> = ({ nextFormStep, formStep }) => {
   const { setFormValues } = useCandidates();
   const [anotherReason, setAnotherReason] = useState(false);
 
@@ -326,6 +323,27 @@ export const StepTwo: React.FC<IStepProps> = ({
         </Grid>
 
         <Grid item xs={12}>
+          <Box sx={{
+            display: "flex",
+            flexDirection: "column",
+          }}>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  color="primary"
+                  id="s2-candidato-lgpd"
+                  {...register("lgpd")}
+                />
+              }
+              label="Você concorda com o tratamento dos seus dados pessoais para fins de seleção de candidatos?"
+            />
+            <Typography variant="caption" color="error" sx={{
+              ml: 4,
+              mb: 2
+            }}>
+            {errors.lgpd?.message}
+          </Typography>
+          </Box>
           <Button type="submit" variant="contained" id="s2-candidato-enviar">
             Próximo
           </Button>

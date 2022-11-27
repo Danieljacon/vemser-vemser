@@ -7,10 +7,10 @@ export const stepOneSchema = yup.object().shape({
     .min(3, "É necessário no mínimo 3 letras")
     .matches(/^[a-zA-Z ]*$/, "Nome inválido"),
   email: yup.string().email("Email inválido").required("Email obrigatório"),
-  cpf: yup.string().required("CPF obrigatório").matches(
-    /^(\d{3}\.?\d{3}\.?\d{3}\-?\d{2})$/,
-    "CPF inválido"
-  ),
+  cpf: yup
+    .string()
+    .required("CPF obrigatório")
+    .matches(/^(\d{3}\.?\d{3}\.?\d{3}\-?\d{2})$/, "CPF inválido"),
   telefone: yup
     .string()
     .required("Telefone obrigatório")
@@ -69,4 +69,5 @@ export const stepTwoSchema = yup.object().shape({
       "Preencha com um link correto: 'https://github.com/'"
     )
     .required("Preencha o campo com o seu usuário do Github"),
+  lgpd: yup.boolean().oneOf([true], "É necessário aceitar os termos"),
 });

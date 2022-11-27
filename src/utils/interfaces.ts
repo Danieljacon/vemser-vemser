@@ -20,7 +20,7 @@ export interface IInscriptionForm {
   altruismo: boolean;
   motivo: string;
   curriculo: string;
-  // lgpd: boolean,
+  lgpd: boolean,
 }
 
 export interface IStepProps {
