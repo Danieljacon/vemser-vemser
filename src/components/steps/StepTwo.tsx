@@ -66,7 +66,7 @@ export const StepTwo: React.FC<IStepProps> = ({
         container
         spacing={2}
         alignContent="center"
-        id="register-candidate"
+        id="s2-candidato-registrar"
         onSubmit={handleSubmit(handleFormSubmit)}
       >
         <Grid item xs={12} md={6}>
@@ -84,7 +84,7 @@ export const StepTwo: React.FC<IStepProps> = ({
               <Radio
                 type="radio"
                 value="sim"
-                id="matriculado-sim"
+                id="s2-candidato-matriculado-sim"
                 {...register("matriculado")}
               />
               Sim
@@ -99,7 +99,7 @@ export const StepTwo: React.FC<IStepProps> = ({
               <Radio
                 type="radio"
                 value="nao"
-                id="matriculado-nao"
+                id="s2-candidato-matriculado-nao"
                 {...register("matriculado")}
               />
               Não
@@ -123,7 +123,7 @@ export const StepTwo: React.FC<IStepProps> = ({
                 <Radio
                   type="radio"
                   value="0"
-                  id="turno-manha"
+                  id="s2-candidato-turno-manha"
                   {...register("turno")}
                 />
                 Manhã
@@ -138,7 +138,7 @@ export const StepTwo: React.FC<IStepProps> = ({
                 <Radio
                   type="radio"
                   value="1"
-                  id="turno-tarde"
+                  id="s2-candidato-turno-tarde"
                   {...register("turno")}
                 />
                 Tarde
@@ -153,7 +153,7 @@ export const StepTwo: React.FC<IStepProps> = ({
                 <Radio
                   type="radio"
                   value="2"
-                  id="turno-noite"
+                  id="s2-candidato-turno-noite"
                   {...register("turno")}
                 />
                 Noite
@@ -169,7 +169,7 @@ export const StepTwo: React.FC<IStepProps> = ({
               sx={{
                 width: "100%",
               }}
-              id="candidato-instituicao"
+              id="s2-candidato-instituicao"
               error={!!errors.instituicao}
               {...register("instituicao")}
             />
@@ -187,7 +187,7 @@ export const StepTwo: React.FC<IStepProps> = ({
               sx={{
                 width: "100%",
               }}
-              id="candidato-curso"
+              id="s2-candidato-curso"
               error={!!errors.curso}
               {...register("curso")}
             />
@@ -203,7 +203,7 @@ export const StepTwo: React.FC<IStepProps> = ({
               control={
                 <Checkbox
                   color="primary"
-                  id="formulario-desafio"
+                  id="s2-candidato-desafio"
                   {...register("desafios")}
                 />
               }
@@ -214,7 +214,7 @@ export const StepTwo: React.FC<IStepProps> = ({
               control={
                 <Checkbox
                   color="primary"
-                  id="formulario-problemas"
+                  id="s2-candidato-problemas"
                   {...register("problemas")}
                 />
               }
@@ -224,7 +224,7 @@ export const StepTwo: React.FC<IStepProps> = ({
               control={
                 <Checkbox
                   color="primary"
-                  id="formulario-reconhecimento"
+                  id="s2-candidato-reconhecimento"
                   {...register("reconhecimento")}
                 />
               }
@@ -234,7 +234,7 @@ export const StepTwo: React.FC<IStepProps> = ({
               control={
                 <Checkbox
                   color="primary"
-                  id="formulario-altruismo"
+                  id="s2-candidato-altruismo"
                   {...register("altruismo")}
                 />
               }
@@ -244,7 +244,7 @@ export const StepTwo: React.FC<IStepProps> = ({
               control={
                 <Checkbox
                   color="primary"
-                  id="formulario-outro"
+                  id="s2-candidato-outro"
                   onChange={() => setAnotherReason((state) => !state)}
                 />
               }
@@ -261,7 +261,7 @@ export const StepTwo: React.FC<IStepProps> = ({
                 sx={{
                   width: "100%",
                 }}
-                id="candidato-motivo"
+                id="s2-candidato-motivo"
                 error={!!errors.motivo}
                 {...register("motivo")}
               />
@@ -276,7 +276,7 @@ export const StepTwo: React.FC<IStepProps> = ({
             sx={{
               width: "100%",
             }}
-            id="candidato-github"
+            id="s2-candidato-github"
             InputProps={{
               startAdornment: (
                 <Box display="flex" alignItems="center" mr={1}>
@@ -319,14 +319,14 @@ export const StepTwo: React.FC<IStepProps> = ({
               accept="application/pdf,application/vnd.ms-excel"
               multiple
               type="file"
-              id="candidato-curriculo"
+              id="s2-candidato-curriculo"
               {...register("curriculo")}
             />
           </Button>
         </Grid>
 
         <Grid item xs={12}>
-          <Button type="submit" variant="contained" id="candidate-formulario">
+          <Button type="submit" variant="contained" id="s2-candidato-enviar">
             Próximo
           </Button>
         </Grid>

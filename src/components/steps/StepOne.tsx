@@ -53,7 +53,7 @@ export const StepOne: React.FC<IStepProps> = ({ nextFormStep, formStep }) => {
         spacing={2}
         alignItems="center"
         alignContent="center"
-        id="register-candidate"
+        id="s1-candidato-registrar"
         onSubmit={handleSubmit(handleFormSubmit)}
       >
         <Grid item xs={12}>
@@ -63,7 +63,7 @@ export const StepOne: React.FC<IStepProps> = ({ nextFormStep, formStep }) => {
             sx={{
               width: "100%",
             }}
-            id="candidato-nome"
+            id="s1-candidato-nome"
             error={!!errors.nome}
             {...register("nome")}
           />
@@ -78,7 +78,7 @@ export const StepOne: React.FC<IStepProps> = ({ nextFormStep, formStep }) => {
             sx={{
               width: "100%",
             }}
-            id="candidato-email"
+            id="s1-candidato-email"
             error={!!errors.email}
             {...register("email")}
           />
@@ -96,7 +96,7 @@ export const StepOne: React.FC<IStepProps> = ({ nextFormStep, formStep }) => {
                   label="CPF"
                   variant="outlined"
                   error={!!errors.cpf}
-                  id="candidato-cpf"
+                  id="s1-candidato-cpf"
                   sx={{
                     width: "100%",
                   }}
@@ -123,7 +123,7 @@ export const StepOne: React.FC<IStepProps> = ({ nextFormStep, formStep }) => {
                   label="Telefone"
                   variant="outlined"
                   error={!!errors.telefone}
-                  id="candidato-telefone"
+                  id="s1-candidato-telefone"
                 />
               )
             }
@@ -138,7 +138,7 @@ export const StepOne: React.FC<IStepProps> = ({ nextFormStep, formStep }) => {
             variant="outlined"
             {...register("rg")}
             error={!!errors.rg}
-            id="candidato-rg"
+            id="s1-candidato-rg"
           />
           <Typography variant="caption" color="error">
             {errors.rg?.message}
@@ -150,7 +150,7 @@ export const StepOne: React.FC<IStepProps> = ({ nextFormStep, formStep }) => {
             label="Estado"
             variant="outlined"
             sx={{ width: "100%" }}
-            id="candidato-estado"
+            id="s1-candidato-estado"
             error={!!errors.estado}
             {...register("estado")}
           >
@@ -169,7 +169,7 @@ export const StepOne: React.FC<IStepProps> = ({ nextFormStep, formStep }) => {
             label="Cidade"
             variant="outlined"
             sx={{ width: "100%" }}
-            id="candidato-cidade"
+            id="s1-candidato-cidade"
             error={!!errors.cidade}
             {...register("cidade")}
           />
@@ -179,7 +179,7 @@ export const StepOne: React.FC<IStepProps> = ({ nextFormStep, formStep }) => {
         </Grid>
 
         <Grid item xs={12}>
-          <Button type="submit" variant="contained" id="button-candidato">
+          <Button type="submit" variant="contained" id="s1-candidato-enviar">
             Próximo
           </Button>
         </Grid>
