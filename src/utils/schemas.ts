@@ -77,11 +77,3 @@ export const stepTwoSchema = yup.object().shape({
   lgpd: yup.boolean().oneOf([true], "É necessário aceitar os termos"),
 });
 
-export const dashboardSearchSchema = yup.object().shape({
-  nome: yup.string().min(3, "É necessário no mínimo 3 letras"),
-  email: yup.string().email("Email inválido").matches(
-    // aceita apenas email com @dbccompany.com.br
-    /^[\w-.]+@dbccompany.com.br$/,
-    "Só é válido o email com @dbccompany.com.br"
-  ),
-});

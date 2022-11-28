@@ -11,8 +11,6 @@ import {
   Pagination
 } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { dashboardSearchSchema } from "../../utils/schemas";
 import { ISearchColaborators } from "../../utils/interfaces";
 import { DataGrid } from "@mui/x-data-grid";
 import { rows } from "../../utils/fakeApi";
@@ -21,10 +19,10 @@ export const Dashboard: React.FC = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
-  } = useForm<ISearchColaborators>({
-    resolver: yupResolver(dashboardSearchSchema),
-  });
+    watch,
+  } = useForm<ISearchColaborators>();
+
+  const { nome, email } = watch();
 
   const handleSearch = (data: ISearchColaborators) => {
     console.log(data);
@@ -54,6 +52,7 @@ export const Dashboard: React.FC = () => {
           display: "flex",
           flexDirection: "column",
           gap: 1,
+          maxWidth: "400px"
         }}
         component="form"
         onSubmit={handleSubmit(handleSearch)}
@@ -70,12 +69,8 @@ export const Dashboard: React.FC = () => {
                 width: "100%",
               }}
               id="dashboard-buscar-nome"
-              error={!!errors.nome}
               {...register("nome")}
             />
-            <Typography variant="caption" color="error">
-              {errors.nome?.message}
-            </Typography>
           </Grid>
           <Grid item xs={12}>
             <TextField
@@ -85,12 +80,8 @@ export const Dashboard: React.FC = () => {
                 width: "100%",
               }}
               id="dashboard-buscar-email"
-              error={!!errors.email}
               {...register("email")}
             />
-            <Typography variant="caption" color="error">
-              {errors.email?.message}
-            </Typography>
           </Grid>
           <Grid item xs={12}>
             <Select
@@ -108,6 +99,7 @@ export const Dashboard: React.FC = () => {
         <Button
           type="submit"
           variant="contained"
+          disabled={!nome && !email}
           sx={{
             width: {
               xs: "100%",
