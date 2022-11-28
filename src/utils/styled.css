@@ -15,6 +15,14 @@ body {
       rgba(0, 0, 0, 0) 100%
     ),
     url("../assets/home-background.jpg");
-    background-position: center;
-    background-size: cover;
+  background-position: center;
+  background-size: cover;
+}
+
+.MuiDataGrid-row {
+  cursor: pointer;
+}
+
+.MuiDataGrid-selectedRowCount {
+  display: none !important;
 }

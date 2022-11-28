@@ -14,6 +14,7 @@ import { useForm } from "react-hook-form";
 import { ISearchColaborators } from "../../utils/interfaces";
 import { DataGrid } from "@mui/x-data-grid";
 import { rows } from "../../utils/fakeApi";
+import { Console } from "console";
 
 export const Dashboard: React.FC = () => {
   const {
@@ -119,7 +120,9 @@ export const Dashboard: React.FC = () => {
           columns={columns}
           pageSize={10}
           hideFooterPagination
-
+          onRowClick={(params) => {
+            console.log(params.row)
+          }}
         />
         <Pagination count={10} color="primary" size="small"
         sx={{
