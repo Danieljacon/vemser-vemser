@@ -31,7 +31,7 @@ export const EditUser: React.FC = () => {
       nome: data.nome,
       email: data.email,
       senha: data.senha,
-      cargo: data.cargo,
+      tipoCargo: data.tipoCargo,
     };
     console.log(data);
   };
@@ -130,9 +130,9 @@ export const EditUser: React.FC = () => {
               >
                 <Radio
                   type="radio"
-                  value="colaborador"
+                  value={0}
                   id="editar-usuario-colaborador"
-                  {...register("cargo")}
+                  {...register("tipoCargo")}
                 />
                 Colaborador
               </FormLabel>
@@ -145,9 +145,9 @@ export const EditUser: React.FC = () => {
               >
                 <Radio
                   type="radio"
-                  value="administrador"
+                  value={1}
                   id="editar-usuario-administrador"
-                  {...register("cargo")}
+                  {...register("tipoCargo")}
                 />
                 Administrador
               </FormLabel>

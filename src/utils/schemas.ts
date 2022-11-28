@@ -75,7 +75,7 @@ export const userSchema = yup.object().shape({
   email: yup
     .string()
     .matches(
-      /^[\w-.]+@dbccompany.com$/,
+      /^[\w-.]+@dbccompany.com.br$/,
       "Só é válido o email com @dbccompany.com.br"
     ),
   senha: yup

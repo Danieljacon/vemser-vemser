@@ -1,24 +1,15 @@
 import { useState, createContext, useContext } from "react";
 import { toast } from "react-toastify";
-
 import { baseurl } from "../utils/baseurl";
 import { useNavigate } from "react-router-dom";
+import {
+  IManagerContext,
+  IChildren,
+  IManagerLogin,
+  IGestor,
+} from "../utils/interfaces";
 import nProgress from "nprogress";
 import axios from "axios";
-
-export interface IManagerContext {
-  gestorDadosLogin: object;
-  handleUserlogin: (user: IManagerLogin) => Promise<void>;
-}
-
-export interface IChildren {
-  children: React.ReactNode;
-}
-
-export interface IManagerLogin {
-  email: string;
-  senha: string;
-}
 
 export const ManagerContext = createContext({} as IManagerContext);
 export const ManagerProvider = ({ children }: IChildren) => {
@@ -29,21 +20,38 @@ export const ManagerProvider = ({ children }: IChildren) => {
   const handleUserlogin = async (user: IManagerLogin) => {
     nProgress.start();
     try {
-      await axios.post(`${baseurl}Gestor`, user).then((response) => {
+      await axios.post(`${baseurl}/Gestor`, user).then((response) => {
         setGestorDadosLogin(response.data);
         localStorage.setItem("token", "asd");
         navigate("/dashboard");
       });
     } catch (error: any) {
-      // if error = 400
       error?.response.status === 400 && toast.error("Email ou senha inválidos");
     } finally {
       nProgress.done();
     }
   };
 
+  const createNewManager = async (manager: IGestor) => {
+    nProgress.start();
+    try {
+      await axios
+        .post(`${baseurl}/Gestor/cadastro`, manager)
+        .then(() => {
+          toast.success("Usuário cadastrado com sucesso");
+          navigate("/dashboard");
+        });
+    } catch (error) {
+      toast.error("Erro ao cadastrar usuário");
+    } finally {
+      nProgress.done();
+    }
+  };
+
   return (
-    <ManagerContext.Provider value={{ gestorDadosLogin, handleUserlogin }}>
+    <ManagerContext.Provider
+      value={{ gestorDadosLogin, handleUserlogin, createNewManager }}
+    >
       {children}
     </ManagerContext.Provider>
   );

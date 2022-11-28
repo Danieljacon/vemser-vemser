@@ -12,8 +12,11 @@ import { useForm } from "react-hook-form";
 import { IUser } from "../../utils/interfaces";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { userSchema } from "../../utils/schemas";
+import { useManager } from "../../context/ManagerContext";
 
 export const NewUser: React.FC = () => {
+  const { createNewManager } = useManager();
+
   const {
     register,
     handleSubmit,
@@ -21,7 +24,7 @@ export const NewUser: React.FC = () => {
   } = useForm<IUser>({
     resolver: yupResolver(userSchema),
     defaultValues: {
-      cargo: "colaborador",
+      tipoCargo: 2,
     },
   });
 
@@ -30,9 +33,9 @@ export const NewUser: React.FC = () => {
       nome: data.nome,
       email: data.email,
       senha: data.senha,
-      cargo: data.cargo,
+      tipoCargo: data.tipoCargo,
     };
-    console.log(data);
+    createNewManager(data);
   };
 
   return (
@@ -129,9 +132,9 @@ export const NewUser: React.FC = () => {
               >
                 <Radio
                   type="radio"
-                  value="colaborador"
+                  value={2}
                   id="novo-usuario-colaborador"
-                  {...register("cargo")}
+                  {...register("tipoCargo")}
                 />
                 Colaborador
               </FormLabel>
@@ -144,9 +147,10 @@ export const NewUser: React.FC = () => {
               >
                 <Radio
                   type="radio"
-                  value="administrador"
+                  value={1}
+                  defaultChecked
                   id="novo-usuario-administrador"
-                  {...register("cargo")}
+                  {...register("tipoCargo")}
                 />
                 Administrador
               </FormLabel>

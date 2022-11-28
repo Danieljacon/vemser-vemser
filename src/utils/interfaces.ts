@@ -63,6 +63,28 @@ export interface IUser {
   nome: string;
   email: string;
   senha: string;
-  cargo: string;
+  tipoCargo: number;
   confirmarSenha?: boolean;
+}
+
+export interface IManagerContext {
+  handleUserlogin: (user: IManagerLogin) => Promise<void>;
+  createNewManager: (manager: IGestor) => Promise<void>;
+  gestorDadosLogin: object;
+}
+
+export interface IChildren {
+  children: React.ReactNode;
+}
+
+export interface IManagerLogin {
+  email: string;
+  senha: string;
+}
+
+export interface IGestor {
+  nome: string;
+  email: string;
+  senha: string;
+  tipoCargo: number;
 }
