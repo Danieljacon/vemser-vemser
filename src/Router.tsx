@@ -6,6 +6,7 @@ import { theme } from "./utils/theme";
 import { CandidatesProvider } from "./context/CandidatesContext";
 import { PrivateRoute } from "./pages/PrivateRoute";
 import { Dashboard } from "./pages/Dashboard";
+import { NewUser } from "./pages/NewUser";
 
 export const Router = () => {
   return (
@@ -18,6 +19,7 @@ export const Router = () => {
 
             <Route element={<PrivateRoute />} >
               <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/dashboard/new-user" element={<NewUser />} />
             </Route>
 
           </Routes>

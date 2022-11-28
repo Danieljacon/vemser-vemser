@@ -11,7 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { IDrawerContainerProps } from "../../utils/interfaces";
 import { menuItems } from "../../utils/menuItems";
 import { List as ListIcon } from "phosphor-react";
@@ -22,6 +22,7 @@ export const DrawerContainer = (props: IDrawerContainerProps) => {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
   const { pathname } = useLocation();
+  const navigate = useNavigate();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -41,24 +42,37 @@ export const DrawerContainer = (props: IDrawerContainerProps) => {
         <img src={logoDbc} alt="logo" />
       </Toolbar>
 
-      <List>
-        {menuItems.map((text) => (
-          <ListItem key={text.text} disablePadding>
-            <Button
-              component={Link}
-              variant={pathname === text.path ? "contained" : "outlined"}
-              to={text.path}
-              sx={{
-                width: "100%",
-                mx: 2,
-                mb: 1,
-              }}
-            >
-              {text.text}
-            </Button>
-          </ListItem>
-        ))}
-      </List>
+      <Box sx={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        minHeight: "calc(100vh - 64px)",
+      }}>
+        <List>
+          {menuItems.map((text) => (
+            <ListItem key={text.text} disablePadding>
+              <Button
+                component={Link}
+                variant={pathname === text.path ? "contained" : "outlined"}
+                to={text.path}
+                sx={{
+                  width: "100%",
+                  mx: 2,
+                  mb: 1,
+                }}
+              >
+                {text.text}
+              </Button>
+            </ListItem>
+          ))}
+        </List>
+        <Button sx={{ mx: 2, mb: 1 }} onClick={
+          () => {
+            localStorage.removeItem("token");
+            navigate("/");
+          }
+        }>Sair</Button>
+      </Box>
     </div>
   );
 
