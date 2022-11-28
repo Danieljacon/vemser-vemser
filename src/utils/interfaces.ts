@@ -24,7 +24,7 @@ export interface IInscriptionForm {
   reconhecimento: boolean;
   altruismo: boolean;
   motivo: string;
-  curriculo: string;
+  curriculo: any;
   lgpd: boolean;
 }
 

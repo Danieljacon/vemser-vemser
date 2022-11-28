@@ -25,7 +25,6 @@ export const StepTwo: React.FC<IStepProps> = ({ nextFormStep, formStep }) => {
   const {
     register,
     handleSubmit,
-    setValue,
     watch,
     formState: { errors },
   } = useForm<IInscriptionForm>({
@@ -37,10 +36,16 @@ export const StepTwo: React.FC<IStepProps> = ({ nextFormStep, formStep }) => {
     resolver: yupResolver(stepTwoSchema),
   });
 
-  const matriculado = watch("matriculado");
-  matriculado === "nao" && setValue("instituicao", " ");
-  matriculado === "nao" && setValue("curso", " ");
-  matriculado === "nao" && setValue("turno", "0");
+  const { matriculado, curriculo, github } = watch();
+
+  const curriculoIsPdf = curriculo?.[0]?.type === "application/pdf";
+  const haveCurriculoOrGithub = () => {
+    if (curriculoIsPdf) {
+      return true;
+    } else {
+      return github?.length > 0;
+    }
+  };
 
   const handleFormSubmit = (data: IInscriptionForm) => {
     setFormValues(data);
@@ -159,194 +164,279 @@ export const StepTwo: React.FC<IStepProps> = ({ nextFormStep, formStep }) => {
           </Grid>
         )}
         {matriculado === "sim" && (
-          <Grid item xs={12} md={6}>
-            <TextField
-              label="Instituição de ensino matriculado"
-              variant="outlined"
-              sx={{
-                width: "100%",
-              }}
-              id="s2-candidato-instituicao"
-              error={!!errors.instituicao}
-              {...register("instituicao")}
-            />
-            <Typography variant="caption" color="error">
-              {errors.instituicao?.message}
-            </Typography>
-          </Grid>
-        )}
-
-        {matriculado === "sim" && (
-          <Grid item xs={12} md={6}>
-            <TextField
-              label="Curso"
-              variant="outlined"
-              sx={{
-                width: "100%",
-              }}
-              id="s2-candidato-curso"
-              error={!!errors.curso}
-              {...register("curso")}
-            />
-            <Typography variant="caption" color="error">
-              {errors.curso?.message}
-            </Typography>
-          </Grid>
-        )}
-
-        <Grid item xs={12}>
-          <Stack direction="column">
-            <FormControlLabel
-              control={
-                <Checkbox
-                  color="primary"
-                  id="s2-candidato-desafio"
-                  {...register("desafios")}
-                />
-              }
-              label="Por gostar de desafios"
-            />
-
-            <FormControlLabel
-              control={
-                <Checkbox
-                  color="primary"
-                  id="s2-candidato-problemas"
-                  {...register("problemas")}
-                />
-              }
-              label="Por gostar de resolver problemas"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  color="primary"
-                  id="s2-candidato-reconhecimento"
-                  {...register("reconhecimento")}
-                />
-              }
-              label="Pelo reconhecimento e valorização financeira do profissional de tecnologia"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  color="primary"
-                  id="s2-candidato-altruismo"
-                  {...register("altruismo")}
-                />
-              }
-              label="Por querer ajudar outras pessoas"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  color="primary"
-                  id="s2-candidato-outro"
-                  onChange={() => setAnotherReason((state) => !state)}
-                />
-              }
-              label="Outro motivo"
-            />
-            <Typography variant="caption" color="error" sx={{ mb: 1 }}>
-              {errors.motivo?.message}
-            </Typography>
-            {anotherReason && (
+          <>
+            <Grid item xs={12} md={6}>
               <TextField
-                label="Por qual motivo você se interessou pela área de tecnologia?"
+                label="Instituição de ensino matriculado"
                 variant="outlined"
-                multiline={true}
                 sx={{
                   width: "100%",
                 }}
-                id="s2-candidato-motivo"
-                error={!!errors.motivo}
-                {...register("motivo")}
+                id="s2-candidato-instituicao"
+                error={!!errors.instituicao}
+                {...register("instituicao")}
               />
-            )}
-          </Stack>
-        </Grid>
+              <Typography variant="caption" color="error">
+                {errors.instituicao?.message}
+              </Typography>
+            </Grid>
 
-        <Grid item xs={12} md={6}>
-          <TextField
-            label="Qual o link do seu repositorio no GitHub?"
-            variant="outlined"
-            sx={{
-              width: "100%",
-            }}
-            id="s2-candidato-github"
-            InputProps={{
-              startAdornment: (
-                <Box display="flex" alignItems="center" mr={1}>
-                  <GithubLogo size={20} color="#1f64ff" weight="fill" />
+            <Grid item xs={12} md={6}>
+              <TextField
+                label="Curso"
+                variant="outlined"
+                sx={{
+                  width: "100%",
+                }}
+                id="s2-candidato-curso"
+                error={!!errors.curso}
+                {...register("curso")}
+              />
+              <Typography variant="caption" color="error">
+                {errors.curso?.message}
+              </Typography>
+            </Grid>
+
+            <Grid item xs={12}>
+              <Stack direction="column">
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      color="primary"
+                      id="s2-candidato-desafio"
+                      {...register("desafios")}
+                    />
+                  }
+                  label="Por gostar de desafios"
+                />
+
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      color="primary"
+                      id="s2-candidato-problemas"
+                      {...register("problemas")}
+                    />
+                  }
+                  label="Por gostar de resolver problemas"
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      color="primary"
+                      id="s2-candidato-reconhecimento"
+                      {...register("reconhecimento")}
+                    />
+                  }
+                  label="Pelo reconhecimento e valorização financeira do profissional de tecnologia"
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      color="primary"
+                      id="s2-candidato-altruismo"
+                      {...register("altruismo")}
+                    />
+                  }
+                  label="Por querer ajudar outras pessoas"
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      color="primary"
+                      id="s2-candidato-outro"
+                      onChange={() => setAnotherReason((state) => !state)}
+                    />
+                  }
+                  label="Outro motivo"
+                />
+                <Typography variant="caption" color="error" sx={{ mb: 1 }}>
+                  {errors.motivo?.message}
+                </Typography>
+                {anotherReason && (
+                  <TextField
+                    label="Por qual motivo você se interessou pela área de tecnologia?"
+                    variant="outlined"
+                    multiline={true}
+                    sx={{
+                      width: "100%",
+                    }}
+                    id="s2-candidato-motivo"
+                    error={!!errors.motivo}
+                    {...register("motivo")}
+                  />
+                )}
+              </Stack>
+            </Grid>
+
+            <Grid item xs={12} md={6}>
+              <TextField
+                label="Qual o link do seu repositorio no GitHub?"
+                variant="outlined"
+                sx={{
+                  width: "100%",
+                }}
+                id="s2-candidato-github"
+                InputProps={{
+                  startAdornment: (
+                    <Box display="flex" alignItems="center" mr={1}>
+                      <GithubLogo size={20} color="#1f64ff" weight="fill" />
+                    </Box>
+                  ),
+                }}
+                error={!!errors.github}
+                {...register("github")}
+              />
+              <Typography variant="caption" color="error">
+                {errors.github?.message}
+              </Typography>
+            </Grid>
+
+            <Grid item xs={12} md={6}>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: {
+                    xs: "column",
+                    md: "row",
+                  },
+                  alignItems: {
+                    xs: "flex-start",
+                    md: "center",
+                  },
+                  gap: 1,
+                }}
+              >
+                <Typography variant="body1">
+                  Deseja adicionar um currículo?
+                </Typography>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: {
+                      xs: "column",
+                      md: "row",
+                    },
+                    alignItems: {
+                      xs: "flex-start",
+                      md: "center",
+                    },
+                    gap: 1,
+                    width: {
+                      xs: "100%",
+                      md: "fit-content",
+                    },
+                  }}
+                >
+                  <Button
+                    variant="outlined"
+                    component="label"
+                    sx={{
+                      width: {
+                        xs: "100%",
+                        md: "fit-content",
+                      },
+                    }}
+                  >
+                    Adicionar
+                    <input
+                      hidden
+                      accept="application/pdf,application/vnd.ms-excel"
+                      multiple
+                      type="file"
+                      id="s2-candidato-curriculo"
+                      {...register("curriculo")}
+                    />
+                  </Button>
                 </Box>
-              ),
-            }}
-            error={!!errors.github}
-            {...register("github")}
-          />
-          <Typography variant="caption" color="error">
-            {errors.github?.message}
-          </Typography>
-        </Grid>
+              </Box>
+              {!curriculoIsPdf && (
+                <Typography variant="caption" color="error" sx={{display: "block"}}>
+                  O arquivo deve ser um PDF
+                </Typography>
+              )}
+              {curriculo?.[0] && (
+                <Typography variant="caption" color="primary">
+                  <strong>Arquivo:</strong> {curriculo?.[0]?.name}
+                </Typography>
+              )}
+            </Grid>
+
+            {!curriculo?.[0] && !github && (
+              <Grid item xs={12}>
+                <Typography variant="caption" color="error">
+                  É necessário preencher pelo menos um dos campos entre Github e
+                  currículo
+                </Typography>
+              </Grid>
+            )}
+
+            <Grid
+              item
+              xs={12}
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    color="primary"
+                    id="s2-candidato-lgpd"
+                    {...register("lgpd")}
+                  />
+                }
+                label="Você concorda com o tratamento dos seus dados pessoais para fins de seleção de candidatos?"
+              />
+              <Typography variant="caption" color="error">
+                {errors.lgpd?.message}
+              </Typography>
+            </Grid>
+          </>
+        )}
 
         <Grid
           item
           xs={12}
-          md={6}
           sx={{
             display: "flex",
-            flexDirection: {
-              xs: "column",
-              md: "row",
-            },
-            alignItems: {
-              xs: "flex-start",
-              md: "center",
-            },
+            flexDirection: "column",
             gap: 1,
           }}
         >
-          <Typography variant="body1">
-            Deseja adicionar um currículo?
-          </Typography>
-          <Button variant="outlined" component="label">
-            Adicionar
-            <input
-              hidden
-              accept="application/pdf,application/vnd.ms-excel"
-              multiple
-              type="file"
-              id="s2-candidato-curriculo"
-              {...register("curriculo")}
-            />
-          </Button>
-        </Grid>
-
-        <Grid item xs={12}>
-          <Box sx={{
-            display: "flex",
-            flexDirection: "column",
-          }}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  color="primary"
-                  id="s2-candidato-lgpd"
-                  {...register("lgpd")}
-                />
-              }
-              label="Você concorda com o tratamento dos seus dados pessoais para fins de seleção de candidatos?"
-            />
-            <Typography variant="caption" color="error" sx={{
-              ml: 4,
-              mb: 2
-            }}>
-            {errors.lgpd?.message}
-          </Typography>
-          </Box>
-          <Button type="submit" variant="contained" id="s2-candidato-enviar">
+          <Button
+            type="submit"
+            variant="contained"
+            id="s2-candidato-enviar"
+            sx={{
+              display: matriculado === "sim" ? "initial" : "none",
+              width: {
+                xs: "100%",
+                md: "fit-content",
+              },
+            }}
+            disabled={
+              matriculado === "nao" ||
+              (curriculo?.[0] && !curriculoIsPdf) ||
+              (!curriculo?.[0] && !github)
+            }
+          >
             Próximo
           </Button>
+          {matriculado === "nao" && (
+            <Typography
+              variant="caption"
+              color="error"
+              sx={{
+                maxWidth: 500,
+              }}
+            >
+              Devido as restrições impostas pelas leis brasileiras, somente
+              alunos que possuem vínculo com uma instituição de ensino podem se
+              candidatar às vagas de estágio.
+            </Typography>
+          )}
         </Grid>
       </Grid>
     </Stack>

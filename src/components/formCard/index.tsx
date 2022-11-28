@@ -11,7 +11,6 @@ import {
 } from "@mui/material";
 import { useCandidates } from "../../context/CandidatesContext";
 import { IFormCardProps } from "../../utils/interfaces";
-import { textAlign } from "@mui/system";
 
 const steps: string[] = [
   "Informações Cadastrais",
@@ -33,7 +32,10 @@ export const FormCard = ({
               {steps[currentStep]}
             </Typography>
           </Box>
-          <Stepper activeStep={currentStep} sx={{ my: 2 }}>
+          <Stepper activeStep={currentStep} sx={{ my: 2, alignItems: {
+            xs: "flex-start",
+            lg: "center",
+          } }}>
             {steps.map((label) => (
               <Step key={label}>
                 <StepLabel

@@ -66,14 +66,7 @@ export const stepTwoSchema = yup.object().shape({
     is: "sim",
     then: yup.string().required("Preencha o campo com o nome do curso"),
   }),
-  github: yup
-    .string()
-    .url("Preencha com um link correto: 'https://github.com/'")
-    .matches(
-      /^https:\/\/github.com\/.*/,
-      "Preencha com um link correto: 'https://github.com/'"
-    )
-    .required("Preencha o campo com o seu usuário do Github"),
+  github: yup.string(),
   lgpd: yup.boolean().oneOf([true], "É necessário aceitar os termos"),
 });
 
