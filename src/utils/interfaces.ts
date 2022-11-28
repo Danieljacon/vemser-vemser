@@ -1,6 +1,6 @@
 export interface ILogin {
   email: string;
-  password: string;
+  senha: string;
 }
 
 export interface ICandidateForm {
