@@ -45,7 +45,7 @@ export const EditUser: React.FC = () => {
           spacing={2}
           alignItems="center"
           alignContent="center"
-          id="novo-usuario"
+          id="editar-usuario"
           onSubmit={handleSubmit(handleAddNewUser)}
         >
           <Grid item xs={12} md={6} component="form">
@@ -55,7 +55,7 @@ export const EditUser: React.FC = () => {
               sx={{
                 width: "100%",
               }}
-              id="novo-usuario-nome"
+              id="editar-usuario-nome"
               error={!!errors.nome}
               {...register("nome")}
             />
@@ -70,7 +70,7 @@ export const EditUser: React.FC = () => {
               sx={{
                 width: "100%",
               }}
-              id="novo-usuario-email"
+              id="editar-usuario-email"
               error={!!errors.email}
               {...register("email")}
             />
@@ -91,7 +91,7 @@ export const EditUser: React.FC = () => {
                 sx={{
                   width: "100%",
                 }}
-                id="novo-usuario-senha"
+                id="editar-usuario-senha"
                 error={!!errors.senha}
                 {...register("senha")}
               />
@@ -108,7 +108,7 @@ export const EditUser: React.FC = () => {
               sx={{
                 width: "100%",
               }}
-              id="novo-usuario-confirmar-senha"
+              id="editar-usuario-confirmar-senha"
               error={!!errors.confirmarSenha}
               {...register("confirmarSenha")}
             />
@@ -131,7 +131,7 @@ export const EditUser: React.FC = () => {
                 <Radio
                   type="radio"
                   value="colaborador"
-                  id="novo-usuario-colaborador"
+                  id="editar-usuario-colaborador"
                   {...register("cargo")}
                 />
                 Colaborador
@@ -146,7 +146,7 @@ export const EditUser: React.FC = () => {
                 <Radio
                   type="radio"
                   value="administrador"
-                  id="novo-usuario-administrador"
+                  id="editar-usuario-administrador"
                   {...register("cargo")}
                 />
                 Administrador
@@ -154,13 +154,28 @@ export const EditUser: React.FC = () => {
             </Stack>
           </Grid>
           <Grid item xs={12}>
-            <Button
-              type="submit"
-              variant="contained"
-              id="novo-usuario-cadastrar"
-            >
-              Cadastrar
-            </Button>
+            <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
+              <Button
+                type="submit"
+                variant="contained"
+                id="editar-usuario-editar"
+                sx={{
+                  width: { xs: "100%", sm: "fit-content" },
+                }}
+              >
+                Editar
+              </Button>
+              <Button
+                variant="contained"
+                color="error"
+                id="editar-usuario-exccluir"
+                sx={{
+                  width: { xs: "100%", sm: "fit-content" },
+                }}
+              >
+                Excluir usuário
+              </Button>
+            </Stack>
           </Grid>
         </Grid>
       </Grid>
