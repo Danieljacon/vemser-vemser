@@ -25,7 +25,7 @@ export interface IInscriptionForm {
   altruismo: boolean;
   motivo: string;
   curriculo: string;
-  lgpd: boolean,
+  lgpd: boolean;
 }
 
 export interface IDrawerContainerProps {
@@ -57,4 +57,12 @@ export interface ISearchColaborators {
   nome: string;
   email: string;
   cargo: string;
+}
+
+export interface INewUser {
+  nome: string;
+  email: string;
+  senha: string;
+  cargo: string;
+  confirmarSenha?: boolean;
 }

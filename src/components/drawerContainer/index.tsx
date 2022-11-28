@@ -112,6 +112,7 @@ export const DrawerContainer = (props: IDrawerContainerProps) => {
               onClick={() => navigate(-1)}
               variant="text"
               color="secondary"
+              id="drawerContainer-voltar"
               startIcon={
                 <CaretLeft size={20} color="var(--white)" weight="bold" />
               }

@@ -15,12 +15,12 @@ export const stepOneSchema = yup.object().shape({
   cpf: yup
     .string()
     .required("CPF obrigatório")
-    .matches(/^(\d{3}\.?\d{3}\.?\d{3}\-?\d{2})$/, "CPF inválido"),
+    .matches(/^(\d{3}\.?\d{3}\.?\d{3}\-?\d{2})$/, "CPF inválido"), // eslint-disable-line
   telefone: yup
     .string()
     .required("Telefone obrigatório")
     .matches(
-      /^\([1-9]{2}\)(?:[2-8]|9[1-9])[0-9]{3}\-[0-9]{4}$/,
+      /^\([1-9]{2}\)(?:[2-8]|9[1-9])[0-9]{3}\-[0-9]{4}$/, // eslint-disable-line
       "O telefone precisa ser válido."
     ),
   rg: yup
@@ -77,3 +77,26 @@ export const stepTwoSchema = yup.object().shape({
   lgpd: yup.boolean().oneOf([true], "É necessário aceitar os termos"),
 });
 
+export const newUserSchema = yup.object().shape({
+  nome: yup.string().required("O nome é obrigatório"),
+  email: yup
+    .string()
+    .matches(
+      /^[\w-.]+@dbccompany.com$/,
+      "Só é válido o email com @dbccompany.com.br"
+    ),
+  senha: yup
+    .string()
+    .min(8, "A senha deve ter no mínimo 8 caracteres")
+    .matches(/^(?=.*[A-Z])/, "A senha deve ter no mínimo 1 letra maiúscula")
+    .matches(/^(?=.*[a-z])/, "A senha deve ter no mínimo 1 letra minúscula")
+    .matches(/^(?=.*[0-9])/, "A senha deve ter no mínimo 1 número")
+    .matches(
+      /^(?=.*[!@#$%^&*])/,
+      "A senha deve ter no mínimo 1 caracter especial"
+    ),
+  confirmarSenha: yup
+    .string()
+    .oneOf([yup.ref("senha"), null], "As senhas devem ser iguais")
+    .required("A confirmação de senha é obrigatória"),
+});
