@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   Box,
   Button,
@@ -8,21 +8,17 @@ import {
   TextField,
   Typography,
   Stack,
-  Pagination
+  Pagination,
 } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { ISearchColaborators } from "../../utils/interfaces";
 import { DataGrid } from "@mui/x-data-grid";
 import { rows } from "../../utils/fakeApi";
-import { Console } from "console";
+import { useNavigate } from "react-router-dom";
 
 export const Dashboard: React.FC = () => {
-  const {
-    register,
-    handleSubmit,
-    watch,
-  } = useForm<ISearchColaborators>();
-
+  const { register, handleSubmit, watch } = useForm<ISearchColaborators>();
+  const navigate = useNavigate();
   const { nome, email } = watch();
 
   const handleSearch = (data: ISearchColaborators) => {
@@ -53,7 +49,7 @@ export const Dashboard: React.FC = () => {
           display: "flex",
           flexDirection: "column",
           gap: 1,
-          maxWidth: "400px"
+          maxWidth: "400px",
         }}
         component="form"
         onSubmit={handleSubmit(handleSearch)}
@@ -114,21 +110,52 @@ export const Dashboard: React.FC = () => {
         </Button>
       </Paper>
 
-      <Box sx={{ height: "470px", width: "100%", display: "flex", flexDirection: "column" }}>
+      <Box
+        sx={{
+          height: "470px",
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          position: "relative",
+          gap: 2,
+        }}
+      >
         <DataGrid
           rows={rows}
           columns={columns}
           pageSize={10}
           hideFooterPagination
           onRowClick={(params) => {
-            console.log(params.row)
+            // console.log(params.row)
           }}
         />
-        <Pagination count={10} color="primary" size="small"
-        sx={{
-          mt: "-40px",
-          mx: "auto"
-        }} />
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            flexDirection: {
+              xs: "column-reverse",
+              md: "row",
+            },
+            gap: 2,
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Button
+            variant="contained"
+            onClick={() => navigate("/dashboard/new-user")}
+            sx={{
+              width: {
+                xs: "100%",
+                md: "fit-content",
+              },
+            }}
+          >
+            Novo usuário
+          </Button>
+          <Pagination count={10} color="primary" size="small" />
+        </Box>
       </Box>
     </Stack>
   );

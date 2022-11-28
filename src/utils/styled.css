@@ -8,6 +8,10 @@ body {
   background-color: #1f64ff;
 }
 
+:root {
+  --white: #eff1f6;
+}
+
 .home-background {
   background-image: linear-gradient(
       360deg,
@@ -23,6 +27,7 @@ body {
   cursor: pointer;
 }
 
-.MuiDataGrid-selectedRowCount {
+.MuiDataGrid-selectedRowCount,
+.MuiDataGrid-footerContainer {
   display: none !important;
 }

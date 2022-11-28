@@ -14,7 +14,7 @@ import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { IDrawerContainerProps } from "../../utils/interfaces";
 import { menuItems } from "../../utils/menuItems";
-import { List as ListIcon } from "phosphor-react";
+import { ArrowLeft, CaretLeft, List as ListIcon } from "phosphor-react";
 import logoDbc from "../../assets/logo-blue.svg";
 
 const drawerWidth = 240;
@@ -42,12 +42,14 @@ export const DrawerContainer = (props: IDrawerContainerProps) => {
         <img src={logoDbc} alt="logo" />
       </Toolbar>
 
-      <Box sx={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-        minHeight: "calc(100vh - 64px)",
-      }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          minHeight: "calc(100vh - 64px)",
+        }}
+      >
         <List>
           {menuItems.map((text) => (
             <ListItem key={text.text} disablePadding>
@@ -66,12 +68,15 @@ export const DrawerContainer = (props: IDrawerContainerProps) => {
             </ListItem>
           ))}
         </List>
-        <Button sx={{ mx: 2, mb: 1 }} onClick={
-          () => {
+        <Button
+          sx={{ mx: 2, mb: 1 }}
+          onClick={() => {
             localStorage.removeItem("token");
             navigate("/");
-          }
-        }>Sair</Button>
+          }}
+        >
+          Sair
+        </Button>
       </Box>
     </div>
   );
@@ -102,6 +107,25 @@ export const DrawerContainer = (props: IDrawerContainerProps) => {
           <Typography variant="h6" noWrap component="div">
             {menuItems.find((item) => item.path === pathname)?.text}
           </Typography>
+          {pathname !== "/dashboard" && (
+            <Button
+              onClick={() => navigate(-1)}
+              variant="text"
+              color="secondary"
+              startIcon={
+                <CaretLeft size={20} color="var(--white)" weight="bold" />
+              }
+              sx={{
+                color: "var(--white)",
+                transition: "all 0.2s ease",
+                "&:hover": {
+                  transform: "scale(1.1)",
+                },
+              }}
+            >
+              Voltar
+            </Button>
+          )}
         </Toolbar>
       </AppBar>
       <Box
