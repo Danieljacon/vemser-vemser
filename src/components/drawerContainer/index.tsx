@@ -14,7 +14,7 @@ import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { IDrawerContainerProps } from "../../utils/interfaces";
 import { menuItems } from "../../utils/menuItems";
-import { ArrowLeft, CaretLeft, List as ListIcon } from "phosphor-react";
+import { CaretLeft, List as ListIcon } from "phosphor-react";
 import logoDbc from "../../assets/logo-blue.svg";
 
 const drawerWidth = 240;

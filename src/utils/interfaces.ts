@@ -59,7 +59,7 @@ export interface ISearchColaborators {
   cargo: string;
 }
 
-export interface INewUser {
+export interface IUser {
   nome: string;
   email: string;
   senha: string;

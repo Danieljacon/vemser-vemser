@@ -12,17 +12,18 @@ import { useForm } from "react-hook-form";
 import { IUser } from "../../utils/interfaces";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { userSchema } from "../../utils/schemas";
+import { useLocation } from "react-router-dom";
 
-export const NewUser: React.FC = () => {
+export const EditUser: React.FC = () => {
+  const { state } = useLocation();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<IUser>({
     resolver: yupResolver(userSchema),
-    defaultValues: {
-      cargo: "colaborador",
-    },
+    defaultValues: state,
   });
 
   const handleAddNewUser = (data: IUser) => {

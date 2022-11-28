@@ -7,6 +7,7 @@ import { CandidatesProvider } from "./context/CandidatesContext";
 import { PrivateRoute } from "./pages/PrivateRoute";
 import { Dashboard } from "./pages/Dashboard";
 import { NewUser } from "./pages/NewUser";
+import { EditUser } from "./pages/EditUser";
 
 export const Router = () => {
   return (
@@ -20,6 +21,7 @@ export const Router = () => {
             <Route element={<PrivateRoute />} >
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/dashboard/new-user" element={<NewUser />} />
+              <Route path="/dashboard/edit-user" element={<EditUser />} />
             </Route>
 
           </Routes>

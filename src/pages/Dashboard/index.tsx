@@ -127,6 +127,9 @@ export const Dashboard: React.FC = () => {
           hideFooterPagination
           onRowClick={(params) => {
             // console.log(params.row)
+            navigate(`/dashboard/edit-user`, {
+              state: params.row,
+            });
           }}
         />
         <Box

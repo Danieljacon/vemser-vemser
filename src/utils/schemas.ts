@@ -77,7 +77,7 @@ export const stepTwoSchema = yup.object().shape({
   lgpd: yup.boolean().oneOf([true], "É necessário aceitar os termos"),
 });
 
-export const newUserSchema = yup.object().shape({
+export const userSchema = yup.object().shape({
   nome: yup.string().required("O nome é obrigatório"),
   email: yup
     .string()
