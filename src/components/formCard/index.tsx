@@ -71,7 +71,7 @@ export const FormCard = ({
 
 export const FormCompleted = () => {
   const { data } = useCandidates();
-  console.log(data);
+
   return (
     <Alert
       severity="success"

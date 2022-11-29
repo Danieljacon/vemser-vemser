@@ -32,10 +32,6 @@ export const Dashboard: React.FC = () => {
     getManagers();
   }, []);
 
-  useEffect(() => {
-    console.log(gestorDados);
-  }, [gestorDados]);
-
   const columns = [
     { field: "nome", headerName: "Nome", width: 200 },
     // { field: "email", headerName: "Email", minWidth: 220, flex: 1 },
