@@ -6,6 +6,11 @@ import {
   Button,
   FormLabel,
   Tooltip,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
 } from "@mui/material";
 import { Radio } from "../../utils/theme";
 import { useForm } from "react-hook-form";
@@ -13,9 +18,21 @@ import { IUser } from "../../utils/interfaces";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { userSchema } from "../../utils/schemas";
 import { useLocation } from "react-router-dom";
+import { useManager } from "../../context/ManagerContext";
+import { useState } from "react";
 
 export const EditUser: React.FC = () => {
   const { state } = useLocation();
+  const { deleteManager } = useManager();
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const {
     register,
@@ -163,7 +180,7 @@ export const EditUser: React.FC = () => {
                   width: { xs: "100%", sm: "fit-content" },
                 }}
               >
-                Editar
+                confirmar edição
               </Button>
               <Button
                 variant="contained"
@@ -172,9 +189,43 @@ export const EditUser: React.FC = () => {
                 sx={{
                   width: { xs: "100%", sm: "fit-content" },
                 }}
+                onClick={handleClickOpen}
               >
                 Excluir usuário
               </Button>
+              <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-excluir-usuario"
+                aria-describedby="alert-excluir-usuario-descricao"
+                maxWidth="xs"
+              >
+                <DialogTitle id="alert-excluir-usuario">
+                  Deseja realmente excluir o usuário?
+                </DialogTitle>
+                <DialogContent>
+                  <DialogContentText id="alert-excluir-usuario-descricao">
+                    Ao excluir o usuário, todos os dados relacionados a ele
+                    serão excluídos permanentemente.
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button variant="contained" onClick={handleClose}>
+                    Não excluir
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="error"
+                    onClick={() => {
+                      handleClose();
+                      deleteManager(state.id);
+                    }}
+                    autoFocus
+                  >
+                    Excluir
+                  </Button>
+                </DialogActions>
+              </Dialog>
             </Stack>
           </Grid>
         </Grid>

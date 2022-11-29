@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Box,
   Button,
@@ -9,26 +9,37 @@ import {
   Typography,
   Stack,
   Pagination,
+  Skeleton,
 } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { ISearchColaborators } from "../../utils/interfaces";
 import { DataGrid } from "@mui/x-data-grid";
 import { rows } from "../../utils/fakeApi";
 import { useNavigate } from "react-router-dom";
+import { useManager } from "../../context/ManagerContext";
 
 export const Dashboard: React.FC = () => {
   const { register, handleSubmit, watch } = useForm<ISearchColaborators>();
   const navigate = useNavigate();
   const { nome, email } = watch();
+  const { loading, getManagers, gestorDados } = useManager();
 
   const handleSearch = (data: ISearchColaborators) => {
     console.log(data);
   };
 
+  useEffect(() => {
+    getManagers();
+  }, []);
+
+  useEffect(() => {
+    console.log(gestorDados);
+  }, [gestorDados]);
+
   const columns = [
     { field: "nome", headerName: "Nome", width: 200 },
-    { field: "email", headerName: "Email", minWidth: 220, flex: 1 },
-    { field: "cargo", headerName: "Cargo", width: 120 },
+    // { field: "email", headerName: "Email", minWidth: 220, flex: 1 },
+    // { field: "cargo", headerName: "Cargo", width: 120 },
   ];
 
   return (
@@ -120,18 +131,29 @@ export const Dashboard: React.FC = () => {
           gap: 2,
         }}
       >
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          pageSize={10}
-          hideFooterPagination
-          onRowClick={(params) => {
-            // console.log(params.row)
-            navigate(`/dashboard/edit-user`, {
-              state: params.row,
-            });
-          }}
-        />
+        {loading ? (
+          <Box>
+            <Skeleton variant="rectangular" animation="wave" height={400} />
+          </Box>
+        ) : (
+          <DataGrid
+            rows={gestorDados?.map((gestor) => {
+              return {
+                id: gestor.idGestor,
+                nome: gestor.nome,
+              };
+            })}
+            columns={columns}
+            pageSize={10}
+            hideFooterPagination
+            onRowClick={(params) => {
+              navigate(`/dashboard/edit-user`, {
+                state: params.row,
+              });
+            }}
+          />
+        )}
+
         <Box
           sx={{
             width: "100%",

@@ -67,10 +67,19 @@ export interface IUser {
   confirmarSenha?: boolean;
 }
 
+interface IGestorTeste {
+  idGestor: number;
+  nome: string;
+}
+
 export interface IManagerContext {
   handleUserlogin: (user: IManagerLogin) => Promise<void>;
   createNewManager: (manager: IGestor) => Promise<void>;
+  getManagers: () => Promise<void>;
+  deleteManager: (idManager: number) => Promise<void>;
   gestorDadosLogin: object;
+  loading: boolean;
+  gestorDados: IGestorTeste[];
 }
 
 export interface IChildren {
