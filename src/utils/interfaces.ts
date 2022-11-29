@@ -13,17 +13,19 @@ export interface ICandidateForm {
   cpf: string;
 }
 
+export type TBoolean = 'T' | 'F';
+
 export interface IInscriptionForm {
-  matriculado: string;
+  matriculado: TBoolean;
   curso: string;
   instituicao: string;
-  turno: string;
+  turno: "MANHA" | "TARDE" | "NOITE";
   github: string;
-  desafios: boolean;
+  desafios: TBoolean;
   problemas: boolean;
   reconhecimento: boolean;
   altruismo: boolean;
-  motivo: string;
+  resposta: string;
   curriculo: any;
   lgpd: boolean;
 }
@@ -53,47 +55,26 @@ export interface IChildren {
   children: React.ReactNode;
 }
 
-export interface ISearchColaborators {
-  nome: string;
-  email: string;
-  cargo: string;
-}
-
-export interface IUser {
-  nome: string;
-  email: string;
-  senha: string;
-  tipoCargo: number;
-  confirmarSenha?: boolean;
-}
-
-interface IGestorTeste {
-  idGestor: number;
-  nome: string;
-}
-
-export interface IManagerContext {
-  handleUserlogin: (user: IManagerLogin) => Promise<void>;
-  createNewManager: (manager: IGestor) => Promise<void>;
-  getManagers: () => Promise<void>;
-  deleteManager: (idManager: number) => Promise<void>;
-  gestorDadosLogin: object;
-  loading: boolean;
-  gestorDados: IGestorTeste[];
-}
-
-export interface IChildren {
-  children: React.ReactNode;
-}
-
-export interface IManagerLogin {
-  email: string;
-  senha: string;
-}
-
 export interface IGestor {
   nome: string;
   email: string;
   senha: string;
   tipoCargo: number;
+  idGestor?: number;
+}
+
+export type ISearchColaborators = Pick<IGestor, "nome" | "email" | "tipoCargo">;
+
+export interface IUser extends IGestor {
+  confirmarSenha?: boolean;
+}
+
+export interface IManagerContext {
+  handleUserlogin: (user: ILogin) => Promise<void>;
+  createNewManager: (manager: IGestor) => Promise<void>;
+  getManagers: () => Promise<void>;
+  deleteManager: (idManager: number) => Promise<void>;
+  gestorDadosLogin: object;
+  loading: boolean;
+  gestorDados: IGestor[];
 }

@@ -35,7 +35,7 @@ export const stepOneSchema = yup.object().shape({
 });
 
 export const stepTwoSchema = yup.object().shape({
-  motivo: yup
+  resposta: yup
     .string()
     .when(["altruismo", "reconhecimento", "desafios", "problemas"], {
       is: (

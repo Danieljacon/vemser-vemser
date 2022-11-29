@@ -30,25 +30,26 @@ export const StepTwo: React.FC<IStepProps> = ({ nextFormStep, formStep }) => {
   } = useForm<IInscriptionForm>({
     mode: "all",
     defaultValues: {
-      matriculado: "sim",
-      turno: "0",
+      matriculado: "T",
+      turno: "MANHA",
     },
     resolver: yupResolver(stepTwoSchema),
   });
 
   const { matriculado, curriculo, github } = watch();
-
   const curriculoIsPdf = curriculo?.[0]?.type === "application/pdf";
-  const haveCurriculoOrGithub = () => {
-    if (curriculoIsPdf) {
-      return true;
-    } else {
-      return github?.length > 0;
-    }
-  };
 
   const handleFormSubmit = (data: IInscriptionForm) => {
-    setFormValues(data);
+    const mappedData = Object.entries(data).map(([key, value]) => {
+      if (typeof value === "boolean") {
+        return [key, value ? "T" : "F"];
+      }
+      return [key, value];
+    });
+
+    const convertedData = Object.fromEntries(mappedData);
+
+    setFormValues(convertedData);
     nextFormStep && nextFormStep();
   };
 
@@ -85,7 +86,7 @@ export const StepTwo: React.FC<IStepProps> = ({ nextFormStep, formStep }) => {
             >
               <Radio
                 type="radio"
-                value="sim"
+                value="T"
                 id="s2-candidato-matriculado-sim"
                 {...register("matriculado")}
               />
@@ -100,7 +101,7 @@ export const StepTwo: React.FC<IStepProps> = ({ nextFormStep, formStep }) => {
             >
               <Radio
                 type="radio"
-                value="nao"
+                value="F"
                 id="s2-candidato-matriculado-nao"
                 {...register("matriculado")}
               />
@@ -109,7 +110,7 @@ export const StepTwo: React.FC<IStepProps> = ({ nextFormStep, formStep }) => {
           </Stack>
         </Grid>
 
-        {matriculado === "sim" && (
+        {matriculado === "T" && (
           <Grid item xs={12} md={6}>
             <FormLabel component="legend" sx={{ mb: 1 }}>
               Em qual turno você estuda?
@@ -124,7 +125,7 @@ export const StepTwo: React.FC<IStepProps> = ({ nextFormStep, formStep }) => {
               >
                 <Radio
                   type="radio"
-                  value="0"
+                  value="MANHA"
                   id="s2-candidato-turno-manha"
                   {...register("turno")}
                 />
@@ -139,7 +140,7 @@ export const StepTwo: React.FC<IStepProps> = ({ nextFormStep, formStep }) => {
               >
                 <Radio
                   type="radio"
-                  value="1"
+                  value="TARDE"
                   id="s2-candidato-turno-tarde"
                   {...register("turno")}
                 />
@@ -154,7 +155,7 @@ export const StepTwo: React.FC<IStepProps> = ({ nextFormStep, formStep }) => {
               >
                 <Radio
                   type="radio"
-                  value="2"
+                  value="NOITE"
                   id="s2-candidato-turno-noite"
                   {...register("turno")}
                 />
@@ -163,7 +164,7 @@ export const StepTwo: React.FC<IStepProps> = ({ nextFormStep, formStep }) => {
             </Stack>
           </Grid>
         )}
-        {matriculado === "sim" && (
+        {matriculado === "T" && (
           <>
             <Grid item xs={12} md={6}>
               <TextField
@@ -251,7 +252,7 @@ export const StepTwo: React.FC<IStepProps> = ({ nextFormStep, formStep }) => {
                   label="Outro motivo"
                 />
                 <Typography variant="caption" color="error" sx={{ mb: 1 }}>
-                  {errors.motivo?.message}
+                  {errors.resposta?.message}
                 </Typography>
                 {anotherReason && (
                   <TextField
@@ -262,8 +263,8 @@ export const StepTwo: React.FC<IStepProps> = ({ nextFormStep, formStep }) => {
                       width: "100%",
                     }}
                     id="s2-candidato-motivo"
-                    error={!!errors.motivo}
-                    {...register("motivo")}
+                    error={!!errors.resposta}
+                    {...register("resposta")}
                   />
                 )}
               </Stack>
@@ -351,7 +352,11 @@ export const StepTwo: React.FC<IStepProps> = ({ nextFormStep, formStep }) => {
                 </Box>
               </Box>
               {!curriculoIsPdf && (
-                <Typography variant="caption" color="error" sx={{display: "block"}}>
+                <Typography
+                  variant="caption"
+                  color="error"
+                  sx={{ display: "block" }}
+                >
                   O arquivo deve ser um PDF
                 </Typography>
               )}
@@ -410,21 +415,21 @@ export const StepTwo: React.FC<IStepProps> = ({ nextFormStep, formStep }) => {
             variant="contained"
             id="s2-candidato-enviar"
             sx={{
-              display: matriculado === "sim" ? "initial" : "none",
+              display: matriculado === "T" ? "initial" : "none",
               width: {
                 xs: "100%",
                 md: "fit-content",
               },
             }}
             disabled={
-              matriculado === "nao" ||
+              matriculado === "F" ||
               (curriculo?.[0] && !curriculoIsPdf) ||
               (!curriculo?.[0] && !github)
             }
           >
             Próximo
           </Button>
-          {matriculado === "nao" && (
+          {matriculado === "F" && (
             <Typography
               variant="caption"
               color="error"

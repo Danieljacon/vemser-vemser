@@ -5,26 +5,21 @@ import { useNavigate } from "react-router-dom";
 import {
   IManagerContext,
   IChildren,
-  IManagerLogin,
   IGestor,
+  ILogin,
 } from "../utils/interfaces";
 import nProgress from "nprogress";
 import axios from "axios";
-
-interface IGestorTeste {
-  idGestor: number;
-  nome: string;
-}
 
 export const ManagerContext = createContext({} as IManagerContext);
 export const ManagerProvider = ({ children }: IChildren) => {
   const navigate = useNavigate();
 
   const [gestorDadosLogin, setGestorDadosLogin] = useState({});
-  const [gestorDados, setGestorDados] = useState<IGestorTeste[]>([]);
+  const [gestorDados, setGestorDados] = useState<IGestor[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const handleUserlogin = async (user: IManagerLogin) => {
+  const handleUserlogin = async (user: ILogin) => {
     nProgress.start();
     try {
       await axios.post(`${baseurl}/Gestor`, user).then((response) => {

@@ -93,7 +93,7 @@ export const Dashboard: React.FC = () => {
               variant="outlined"
               sx={{ width: "100%" }}
               id="dashboard-buscar-cargo"
-              {...register("cargo")}
+              {...register("tipoCargo")}
             >
               <option value="Administrador">Administrador</option>
               <option value="Colaborador">Colaborador</option>
